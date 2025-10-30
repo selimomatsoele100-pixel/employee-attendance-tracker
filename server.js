@@ -174,10 +174,10 @@ app.get('/api/stats/dashboard', (req, res) => {
   });
 });
 
-// Serve static files from React public folder (for development)
-app.use('/static', express.static(path.join(__dirname, 'frontend/public')));
+// Serve static files from React public folder
+app.use(express.static(path.join(__dirname, 'frontend/public')));
 
-// Serve React build with better error handling
+// Serve React build
 app.use(express.static(path.join(__dirname, 'frontend/build')));
 
 // Main route - serve React app or fallback to public HTML
