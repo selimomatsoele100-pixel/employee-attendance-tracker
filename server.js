@@ -5,7 +5,7 @@ const path = require('path');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 10000;
 
 // Database connection
 const db = mysql.createConnection({
@@ -21,7 +21,7 @@ db.connect((err) => {
   if (err) {
     console.error('Database connection failed:', err);
   } else {
-    console.log('Connected to MySQL database');
+    console.log('✅ Connected to MySQL database');
     
     // Create table if not exists
     const createTableQuery = `
@@ -39,7 +39,7 @@ db.connect((err) => {
       if (err) {
         console.error('Error creating table:', err);
       } else {
-        console.log('Attendance table ready');
+        console.log('✅ Attendance table ready');
       }
     });
   }
@@ -54,7 +54,7 @@ app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
     message: 'Employee Attendance API is running',
-    environment: process.env.NODE_ENV
+    timestamp: new Date().toISOString()
   });
 });
 
@@ -133,18 +133,18 @@ app.get('/api/stats/dashboard', (req, res) => {
     db.query(queries[key], (err, result) => {
       if (err) {
         console.error(`Error fetching ${key}:`, err);
-        results[key] = null;
+        results[key] = { count: 0 };
       } else {
-        results[key] = result;
+        results[key] = result[0];
       }
       
       completed++;
       if (completed === Object.keys(queries).length) {
         res.json({
-          totalRecords: results.totalRecords[0]?.count || 0,
-          presentToday: results.presentToday[0]?.count || 0,
-          absentToday: results.absentToday[0]?.count || 0,
-          uniqueEmployees: results.uniqueEmployees[0]?.count || 0
+          totalRecords: results.totalRecords.count,
+          presentToday: results.presentToday.count,
+          absentToday: results.absentToday.count,
+          uniqueEmployees: results.uniqueEmployees.count
         });
       }
     });
@@ -159,6 +159,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend/build/index.html'));
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📊 Environment: ${process.env.NODE_ENV || 'production'}`);
 });
