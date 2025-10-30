@@ -1,28 +1,23 @@
 import axios from 'axios';
 
-// Auto-detect environment: use localhost in development, deployed URL in production
+// Production backend URL (Render)
 const API_BASE_URL = process.env.REACT_APP_API_URL || (
   window.location.hostname === 'localhost'
     ? 'http://localhost:5000/api'
-    : `${window.location.origin}/api`
+    : 'https://employee-attendance-tracker-3.onrender.com/api'
 );
 
-// Create Axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 10000, // 10 seconds timeout
+  timeout: 10000,
 });
 
-// Interceptors for logging and error handling
 api.interceptors.request.use(
   (config) => {
     console.log(`[API Request] ${config.method.toUpperCase()} ${config.url}`);
     return config;
   },
-  (error) => {
-    console.error('[API Request Error]', error);
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 api.interceptors.response.use(
@@ -37,7 +32,6 @@ api.interceptors.response.use(
   }
 );
 
-// Attendance API endpoints
 export const attendanceAPI = {
   getAll: () => api.get('/attendance'),
   create: (data) => api.post('/attendance', data),
@@ -46,7 +40,6 @@ export const attendanceAPI = {
   getByDate: (date) => api.get(`/attendance/date/${date}`),
 };
 
-// Stats API endpoints
 export const statsAPI = {
   getDashboard: () => api.get('/stats/dashboard'),
 };
