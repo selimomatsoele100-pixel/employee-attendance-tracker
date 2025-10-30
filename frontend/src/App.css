@@ -1,32 +1,43 @@
-/* Modern CSS Variables */
+/* Modern CSS Variables - Refined Color Palette */
 :root {
-  /* Color Palette - Modern Non-Primary Colors */
-  --midnight: #2c3e50;
-  --cloud: #ecf0f1;
-  --silver: #bdc3c7;
-  --asphalt: #34495e;
-  --concrete: #95a5a6;
-  --amethyst: #9b59b6;
-  --emerald: #2ecc71;
-  --sunflower: #f1c40f;
-  --carrot: #e67e22;
-  --alizarin: #e74c3c;
-  --turquoise: #1abc9c;
-  --peter-river: #3498db;
-  --coral: #e74c3c;
+  /* Color Palette - Sophisticated Neutrals with Single Accent */
+  --slate-900: #1a202c;
+  --slate-700: #2d3748;
+  --slate-500: #718096;
+  --slate-300: #cbd5e0;
+  --slate-100: #f7fafc;
   
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --gradient-success: linear-gradient(135deg, #2ecc71, #27ae60);
-  --gradient-warning: linear-gradient(135deg, #f1c40f, #f39c12);
-  --gradient-danger: linear-gradient(135deg, #e74c3c, #c0392b);
-  --gradient-info: linear-gradient(135deg, #3498db, #2980b9);
+  --stone-800: #292524;
+  --stone-600: #57534e;
+  --stone-400: #a8a29e;
+  --stone-200: #e7e5e4;
+  --stone-50: #fafaf9;
+  
+  /* Single Accent Color - Deep Blue */
+  --accent-600: #2563eb;
+  --accent-500: #3b82f6;
+  --accent-400: #60a5fa;
+  --accent-100: #dbeafe;
+  
+  /* Semantic Colors Derived from Palette */
+  --success: #059669;
+  --warning: #d97706;
+  --error: #dc2626;
+  --info: #2563eb;
+  
+  /* Gradients - Subtle and Professional */
+  --gradient-primary: linear-gradient(135deg, var(--slate-700) 0%, var(--slate-900) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--accent-500) 0%, var(--accent-600) 100%);
+  --gradient-surface: linear-gradient(135deg, var(--stone-50) 0%, var(--slate-100) 100%);
+  --gradient-success: linear-gradient(135deg, #059669, #047857);
+  --gradient-warning: linear-gradient(135deg, #d97706, #b45309);
+  --gradient-error: linear-gradient(135deg, #dc2626, #b91c1c);
   
   /* Shadows */
-  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
-  --shadow-xl: 0 20px 25px rgba(0,0,0,0.1);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   
   /* Border Radius */
   --radius-sm: 8px;
@@ -44,9 +55,9 @@
 
 body {
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--slate-100) 0%, var(--stone-50) 100%);
   min-height: 100vh;
-  color: var(--midnight);
+  color: var(--slate-900);
   line-height: 1.6;
 }
 
@@ -60,7 +71,7 @@ body {
 .app-header {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid var(--stone-200);
   box-shadow: var(--shadow-md);
   position: sticky;
   top: 0;
@@ -84,7 +95,7 @@ body {
 
 .logo-icon {
   font-size: 2rem;
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -93,7 +104,7 @@ body {
 .logo-text h1 {
   font-size: 1.5rem;
   font-weight: 700;
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -102,14 +113,14 @@ body {
 
 .logo-text span {
   font-size: 0.8rem;
-  color: var(--concrete);
+  color: var(--slate-500);
   font-weight: 500;
 }
 
 .main-nav {
   display: flex;
   gap: 8px;
-  background: rgba(236, 240, 241, 0.5);
+  background: var(--stone-50);
   padding: 4px;
   border-radius: var(--radius-lg);
 }
@@ -124,20 +135,20 @@ body {
   border-radius: var(--radius-md);
   cursor: pointer;
   font-weight: 500;
-  color: var(--asphalt);
+  color: var(--slate-700);
   transition: all 0.3s ease;
   font-size: 0.9rem;
 }
 
 .nav-item:hover {
   background: rgba(255, 255, 255, 0.8);
-  color: var(--midnight);
+  color: var(--slate-900);
   transform: translateY(-1px);
 }
 
 .nav-item.active {
   background: white;
-  color: var(--amethyst);
+  color: var(--accent-600);
   box-shadow: var(--shadow-sm);
 }
 
@@ -150,7 +161,7 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -196,7 +207,7 @@ body {
 }
 
 .stat-card.loading {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--stone-200) 25%, var(--slate-300) 50%, var(--stone-200) 75%);
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
 }
@@ -250,7 +261,7 @@ body {
 }
 
 .form-header {
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   color: white;
   padding: 2rem;
   text-align: center;
@@ -287,42 +298,42 @@ body {
   gap: 8px;
   margin-bottom: 0.5rem;
   font-weight: 600;
-  color: var(--asphalt);
+  color: var(--slate-700);
   font-size: 0.9rem;
 }
 
 .input-icon {
-  color: var(--amethyst);
+  color: var(--accent-600);
 }
 
 .form-input,
 .form-select {
   width: 100%;
   padding: 12px 16px;
-  border: 2px solid var(--cloud);
+  border: 2px solid var(--stone-200);
   border-radius: var(--radius-md);
   font-size: 1rem;
   transition: all 0.3s ease;
   background: white;
-  color: var(--midnight);
+  color: var(--slate-900);
 }
 
 .form-input:focus,
 .form-select:focus {
   outline: none;
-  border-color: var(--amethyst);
-  box-shadow: 0 0 0 3px rgba(155, 89, 182, 0.1);
+  border-color: var(--accent-500);
+  box-shadow: 0 0 0 3px var(--accent-100);
   transform: translateY(-1px);
 }
 
 .form-input::placeholder {
-  color: var(--silver);
+  color: var(--slate-500);
 }
 
 .submit-button {
   width: 100%;
   padding: 15px;
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   color: white;
   border: none;
   border-radius: var(--radius-md);
@@ -347,7 +358,7 @@ body {
 }
 
 .submit-button.submitting {
-  background: var(--concrete);
+  background: var(--slate-500);
 }
 
 .spinner {
@@ -374,22 +385,22 @@ body {
 
 .dashboard-header {
   padding: 2rem;
-  border-bottom: 1px solid var(--cloud);
+  border-bottom: 1px solid var(--stone-200);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: var(--gradient-surface);
 }
 
 .dashboard-title-section h2 {
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--midnight);
+  color: var(--slate-900);
   margin-bottom: 0.5rem;
 }
 
 .dashboard-subtitle {
-  color: var(--concrete);
+  color: var(--slate-500);
   font-size: 0.9rem;
 }
 
@@ -412,12 +423,12 @@ body {
 }
 
 .export-button {
-  background: var(--turquoise);
+  background: var(--success);
   color: white;
 }
 
 .refresh-button {
-  background: var(--peter-river);
+  background: var(--accent-500);
   color: white;
 }
 
@@ -430,7 +441,7 @@ body {
 .filter-container {
   padding: 1.5rem 2rem;
   background: white;
-  border-bottom: 1px solid var(--cloud);
+  border-bottom: 1px solid var(--stone-200);
   display: flex;
   gap: 1rem;
   align-items: center;
@@ -446,13 +457,13 @@ body {
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--concrete);
+  color: var(--slate-500);
 }
 
 .search-input {
   width: 100%;
   padding: 12px 12px 12px 40px;
-  border: 2px solid var(--cloud);
+  border: 2px solid var(--stone-200);
   border-radius: var(--radius-md);
   font-size: 0.9rem;
   transition: all 0.3s ease;
@@ -460,13 +471,13 @@ body {
 
 .search-input:focus {
   outline: none;
-  border-color: var(--amethyst);
-  box-shadow: 0 0 0 3px rgba(155, 89, 182, 0.1);
+  border-color: var(--accent-500);
+  box-shadow: 0 0 0 3px var(--accent-100);
 }
 
 .date-filter {
   padding: 12px;
-  border: 2px solid var(--cloud);
+  border: 2px solid var(--stone-200);
   border-radius: var(--radius-md);
   font-size: 0.9rem;
   transition: all 0.3s ease;
@@ -474,7 +485,7 @@ body {
 
 .date-filter:focus {
   outline: none;
-  border-color: var(--amethyst);
+  border-color: var(--accent-500);
 }
 
 /* Table Styles */
@@ -489,12 +500,12 @@ body {
 }
 
 .attendance-table th {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: var(--gradient-surface);
   padding: 1rem;
   text-align: left;
   font-weight: 600;
-  color: var(--asphalt);
-  border-bottom: 2px solid var(--cloud);
+  color: var(--slate-700);
+  border-bottom: 2px solid var(--stone-200);
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -502,8 +513,8 @@ body {
 
 .attendance-table td {
   padding: 1rem;
-  border-bottom: 1px solid var(--cloud);
-  color: var(--midnight);
+  border-bottom: 1px solid var(--stone-200);
+  color: var(--slate-900);
 }
 
 .sortable {
@@ -513,7 +524,7 @@ body {
 }
 
 .sortable:hover {
-  background: rgba(155, 89, 182, 0.1);
+  background: var(--accent-100);
 }
 
 .sort-icon {
@@ -526,7 +537,7 @@ body {
 }
 
 .table-row:hover {
-  background: rgba(155, 89, 182, 0.05);
+  background: var(--accent-100);
   transform: scale(1.01);
 }
 
@@ -541,7 +552,7 @@ body {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: var(--gradient-primary);
+  background: var(--gradient-accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -552,7 +563,7 @@ body {
 
 .employee-id {
   font-family: 'Monaco', 'Consolas', monospace;
-  color: var(--concrete);
+  color: var(--slate-500);
   font-size: 0.85rem;
 }
 
@@ -570,21 +581,21 @@ body {
 }
 
 .status-badge.present {
-  background: rgba(46, 204, 113, 0.1);
-  color: var(--emerald);
-  border: 1px solid rgba(46, 204, 113, 0.2);
+  background: rgba(5, 150, 105, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(5, 150, 105, 0.2);
 }
 
 .status-badge.absent {
-  background: rgba(231, 76, 60, 0.1);
-  color: var(--alizarin);
-  border: 1px solid rgba(231, 76, 60, 0.2);
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--error);
+  border: 1px solid rgba(220, 38, 38, 0.2);
 }
 
 .delete-btn {
-  background: rgba(231, 76, 60, 0.1);
-  border: 1px solid rgba(231, 76, 60, 0.2);
-  color: var(--alizarin);
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  color: var(--error);
   padding: 8px;
   border-radius: var(--radius-sm);
   cursor: pointer;
@@ -592,7 +603,7 @@ body {
 }
 
 .delete-btn:hover {
-  background: var(--alizarin);
+  background: var(--error);
   color: white;
   transform: scale(1.1);
 }
@@ -609,15 +620,15 @@ body {
 }
 
 .message-success {
-  background: rgba(46, 204, 113, 0.1);
-  color: var(--emerald);
-  border: 1px solid rgba(46, 204, 113, 0.2);
+  background: rgba(5, 150, 105, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(5, 150, 105, 0.2);
 }
 
 .message-error {
-  background: rgba(231, 76, 60, 0.1);
-  color: var(--alizarin);
-  border: 1px solid rgba(231, 76, 60, 0.2);
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--error);
+  border: 1px solid rgba(220, 38, 38, 0.2);
 }
 
 .message-icon {
@@ -628,14 +639,14 @@ body {
 .dashboard-loading {
   text-align: center;
   padding: 3rem;
-  color: var(--concrete);
+  color: var(--slate-500);
 }
 
 .loading-spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid var(--cloud);
-  border-top: 4px solid var(--amethyst);
+  border: 4px solid var(--stone-200);
+  border-top: 4px solid var(--accent-500);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 1rem;
@@ -645,7 +656,7 @@ body {
 .empty-state {
   text-align: center;
   padding: 3rem;
-  color: var(--concrete);
+  color: var(--slate-500);
 }
 
 .empty-icon {
@@ -655,7 +666,7 @@ body {
 }
 
 .empty-state h3 {
-  color: var(--asphalt);
+  color: var(--slate-700);
   margin-bottom: 0.5rem;
 }
 
@@ -663,7 +674,7 @@ body {
 .coming-soon {
   text-align: center;
   padding: 4rem 2rem;
-  color: var(--concrete);
+  color: var(--slate-500);
 }
 
 .coming-soon-icon {
@@ -673,13 +684,13 @@ body {
 }
 
 .coming-soon h2 {
-  color: var(--asphalt);
+  color: var(--slate-700);
   margin-bottom: 1rem;
 }
 
 /* Footer */
 .app-footer {
-  background: var(--midnight);
+  background: var(--slate-900);
   color: white;
   padding: 1.5rem 2rem;
   margin-top: auto;
@@ -697,7 +708,7 @@ body {
   display: flex;
   gap: 1rem;
   align-items: center;
-  color: var(--silver);
+  color: var(--slate-300);
   font-size: 0.9rem;
 }
 
@@ -766,14 +777,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--cloud);
+  background: var(--stone-200);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--silver);
+  background: var(--slate-500);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--concrete);
+  background: var(--slate-700);
 }
