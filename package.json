@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "build": "cd frontend && npm install --legacy-peer-deps && CI=false npm run build || echo 'Build failed but continuing deployment'",
+    "build": "cd frontend && npm install --legacy-peer-deps && CI=false npm run build",
     "start": "node server.js",
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\""
   },
@@ -12,8 +12,5 @@
     "mysql2": "^3.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1"
-  },
-  "engines": {
-    "node": ">=16.0.0"
   }
 }
