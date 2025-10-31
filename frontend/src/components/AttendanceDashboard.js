@@ -71,35 +71,6 @@ const AttendanceDashboard = () => {
     });
   };
 
-  const handleRefresh = () => {
-    setFilterDate('');
-    setSearchTerm('');
-    setSortConfig({ key: 'date', direction: 'desc' });
-  };
-
-  const exportToCSV = () => {
-    const headers = ['Employee Name', 'Employee ID', 'Date', 'Status'];
-    const csvData = attendance.map(record => [
-      record.employeeName,
-      record.employeeID,
-      new Date(record.date).toLocaleDateString(),
-      record.status
-    ]);
-
-    const csvContent = [
-      headers.join(','),
-      ...csvData.map(row => row.join(','))
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `attendance-${new Date().toISOString().split('T')[0]}.csv`;
-    a.click();
-    window.URL.revokeObjectURL(url);
-  };
-
   const SortIcon = ({ column }) => (
     <span className="sort-icon">
       {sortConfig.key === column && (
@@ -117,36 +88,46 @@ const AttendanceDashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <div className="dashboard-header">
-        <div className="dashboard-title-section">
-          <h2 className="dashboard-title">Attendance Dashboard</h2>
-          <p className="dashboard-subtitle">
-            {attendance.length} record{attendance.length !== 1 ? 's' : ''} found
-          </p>
-        </div>
-        
-        <div className="dashboard-actions">
-          <button onClick={exportToCSV} className="action-button export-button">
-            Export CSV
-          </button>
-          <button onClick={handleRefresh} className="action-button refresh-button">
-            Refresh
-          </button>
+      {/* Header Card */}
+      <div className="header-card">
+        <div className="header-content">
+          <div className="title-section">
+            <h1 className="dashboard-title">Attendance Dashboard</h1>
+            <p className="dashboard-subtitle">
+              {attendance.length} record{attendance.length !== 1 ? 's' : ''} found
+            </p>
+          </div>
+          <div className="date-display">
+            {new Date().toLocaleDateString('en-US', { 
+              weekday: 'long', 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
+          </div>
         </div>
       </div>
 
-      <div className="filter-container">
-        <div className="filter-group search-group">
-          <input
-            type="text"
-            placeholder="Search by name or ID..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-input"
-          />
+      {/* Filter Card */}
+      <div className="filter-card">
+        <div className="search-section">
+          <div className="search-container">
+            <svg className="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" 
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <input
+              type="text"
+              placeholder="Search employees by name or ID..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+          </div>
         </div>
         
-        <div className="filter-group">
+        <div className="filter-section">
+          <label className="filter-label">Filter by Date</label>
           <input
             type="date"
             value={filterDate}
@@ -156,69 +137,104 @@ const AttendanceDashboard = () => {
         </div>
       </div>
 
-      {error && <div className="message message-error">{error}</div>}
+      {error && (
+        <div className="error-card">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="error-icon">
+            <path d="M12 8V12M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" 
+              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          {error}
+        </div>
+      )}
 
       {attendance.length === 0 ? (
-        <div className="empty-state">
+        <div className="empty-state-card">
+          <div className="empty-icon">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+              <path d="M9 12L11 14L15 10M21 16V8C21 6.89543 20.1046 6 19 6H5C3.89543 6 3 6.89543 3 8V16C3 17.1046 3.89543 18 5 18H19C20.1046 18 21 17.1046 21 16Z" 
+                stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
           <h3>No attendance records found</h3>
           <p>Try adjusting your search criteria or add new records.</p>
         </div>
       ) : (
-        <div className="table-container">
-          <table className="attendance-table">
-            <thead>
-              <tr>
-                <th onClick={() => handleSort('employeeName')} className="sortable">
-                  Employee Name <SortIcon column="employeeName" />
-                </th>
-                <th onClick={() => handleSort('employeeID')} className="sortable">
-                  Employee ID <SortIcon column="employeeID" />
-                </th>
-                <th onClick={() => handleSort('date')} className="sortable">
-                  Date <SortIcon column="date" />
-                </th>
-                <th onClick={() => handleSort('status')} className="sortable">
-                  Status <SortIcon column="status" />
-                </th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {attendance.map((record) => (
-                <tr key={record.id} className="table-row">
-                  <td className="employee-name">
-                    <div className="avatar">
-                      {record.employeeName.split(' ').map(n => n[0]).join('').toUpperCase()}
+        <div className="table-card">
+          <div className="table-container">
+            <table className="attendance-table">
+              <thead>
+                <tr>
+                  <th onClick={() => handleSort('employeeName')} className="sortable">
+                    <div className="th-content">
+                      Employee Name
+                      <SortIcon column="employeeName" />
                     </div>
-                    {record.employeeName}
-                  </td>
-                  <td className="employee-id">{record.employeeID}</td>
-                  <td className="attendance-date">
-                    {new Date(record.date).toLocaleDateString('en-US', {
-                      weekday: 'short',
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric'
-                    })}
-                  </td>
-                  <td>
-                    <span className={`status-badge ${record.status.toLowerCase()}`}>
-                      {record.status}
-                    </span>
-                  </td>
-                  <td>
-                    <button 
-                      onClick={() => handleDelete(record.id)}
-                      className="delete-btn"
-                      title="Delete record"
-                    >
-                      Delete
-                    </button>
-                  </td>
+                  </th>
+                  <th onClick={() => handleSort('employeeID')} className="sortable">
+                    <div className="th-content">
+                      Employee ID
+                      <SortIcon column="employeeID" />
+                    </div>
+                  </th>
+                  <th onClick={() => handleSort('date')} className="sortable">
+                    <div className="th-content">
+                      Date
+                      <SortIcon column="date" />
+                    </div>
+                  </th>
+                  <th onClick={() => handleSort('status')} className="sortable">
+                    <div className="th-content">
+                      Status
+                      <SortIcon column="status" />
+                    </div>
+                  </th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {attendance.map((record) => (
+                  <tr key={record.id} className="table-row">
+                    <td className="employee-name">
+                      <div className="employee-info">
+                        <div className="avatar">
+                          {record.employeeName.split(' ').map(n => n[0]).join('').toUpperCase()}
+                        </div>
+                        <div className="name-details">
+                          <span className="name">{record.employeeName}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="employee-id">{record.employeeID}</td>
+                    <td className="attendance-date">
+                      {new Date(record.date).toLocaleDateString('en-US', {
+                        weekday: 'short',
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                      })}
+                    </td>
+                    <td>
+                      <span className={`status-badge ${record.status.toLowerCase()}`}>
+                        {record.status}
+                      </span>
+                    </td>
+                    <td>
+                      <button 
+                        onClick={() => handleDelete(record.id)}
+                        className="delete-btn"
+                        title="Delete record"
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                          <path d="M19 7L18.1327 19.1425C18.0579 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7M4 7H20" 
+                            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

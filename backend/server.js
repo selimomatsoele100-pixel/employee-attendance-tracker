@@ -4,11 +4,9 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
-const path = require('path');
-const fs = require('fs');
 
 const app = express();
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 5000;
 
 // =============================
 // DATABASE CONNECTION
@@ -145,43 +143,10 @@ app.get('/api/stats/dashboard', (req, res) => {
 });
 
 // =============================
-// FRONTEND SERVING
-// =============================
-const buildPath = path.join(__dirname, 'frontend', 'build');
-const indexFile = path.join(buildPath, 'index.html');
-
-// Serve React static build
-if (fs.existsSync(buildPath)) {
-  app.use(express.static(buildPath));
-  console.log('✅ Serving React build folder');
-} else {
-  console.warn('⚠️  React build folder not found. Did you run npm run build?');
-}
-
-// Catch-all: serve React app or API info
-app.get('*', (req, res) => {
-  if (fs.existsSync(indexFile)) {
-    res.sendFile(indexFile);
-  } else {
-    res.json({
-      message: 'Employee Attendance Tracker API is running!',
-      note: 'Frontend build not found. Please run "npm run build" inside frontend/',
-      endpoints: {
-        health: '/api/health',
-        getAll: '/api/attendance',
-        post: 'POST /api/attendance',
-        delete: 'DELETE /api/attendance/:id',
-        stats: '/api/stats/dashboard',
-      },
-    });
-  }
-});
-
-// =============================
 // START SERVER
 // =============================
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🚀 Backend server running on port ${PORT}`);
   console.log(`📊 Environment: ${process.env.NODE_ENV || 'production'}`);
   console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
 });
